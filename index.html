@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown New Year</title>
+    <style>
+        body {
+            background-color: rgba(255, 228, 196, 0.681);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        #countdown {
+            text-align: center;
+            font-size: 40px;
+            margin: 0px 20px;
+            color: #000000;
+        }
+
+        #message {
+            font-size: 28px;
+            color: #FF5733;
+            margin-top: 20px;
+        }
+
+        #happyNewYear {
+            font-size: 40px;
+            color: #28A745;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="countdown">
+        <div id="time"></div>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const now = new Date();
+            const newYear = new Date(now.getFullYear() + 1, 0, 1);
+
+            const diff = newYear - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            const timeElement = document.getElementById('time');
+            const messageElement = document.getElementById('message');
+            if (diff <= 0) {
+                timeElement.innerHTML = "";
+                messageElement.innerHTML = `<span id="happyNewYear">Happy New Year!</span>`;
+            } else {
+                timeElement.innerHTML = `
+                    ${days} day(s) 
+                    ${hours} hours 
+                    ${minutes} minutes 
+                    ${seconds} seconds
+                `;
+                messageElement.innerHTML = "to New Year!";
+            }
+        }
+
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
