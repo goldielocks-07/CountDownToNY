@@ -8,6 +8,7 @@
         body {
             background-color: rgba(255, 228, 196, 0.681);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -16,7 +17,7 @@
         }
 
         #countdown {
-            text-align: justify;
+            text-align: center;
             font-size: 48px;
             margin: 0px 20px;
             color: #000000;
@@ -33,13 +34,34 @@
             color: #28A745;
             font-weight: bold;
         }
+
+        #enableAudio {
+            margin-top: 20px;
+            display: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #enableAudio:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
+
     <div id="countdown">
         <div id="time"></div>
         <div id="message"></div>
     </div>
+
+    <button id="enableAudio">Enable Audio</button>
+
+    <audio id="newYearAudio" src="AuldLangSyne.mp3" loop></audio>
 
     <script>
         function updateCountdown() {
@@ -50,7 +72,7 @@
 
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const minutes = Math.floor((diff % (1000 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
             const timeElement = document.getElementById('time');
@@ -69,7 +91,25 @@
             }
         }
 
-        
+        // Attempt autoplay
+        const audio = document.getElementById('newYearAudio');
+        const enableAudioButton = document.getElementById('enableAudio');
+
+        function tryAutoplay() {
+            audio.play().catch(() => {
+                // Show enable audio button if autoplay fails
+                enableAudioButton.style.display = "block";
+            });
+        }
+
+        enableAudioButton.addEventListener('click', () => {
+            audio.play();
+            enableAudioButton.style.display = "none"; // Hide button after enabling
+        });
+
+        // Try autoplay on page load
+        tryAutoplay();
+
         setInterval(updateCountdown, 1000);
         updateCountdown();
     </script>
